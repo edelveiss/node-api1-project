@@ -121,6 +121,7 @@ function App() {
           edit={edit}
           setEdit={setEdit}
           error={error}
+          setError={setError}
         />
       </div>
     </div>

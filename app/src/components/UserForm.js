@@ -10,6 +10,7 @@ const UserForm = (props) => {
     e.preventDefault();
     props.setUser(initialUser);
     props.setEdit(false);
+    props.setError("");
   };
 
   return (

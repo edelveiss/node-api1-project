@@ -27,7 +27,7 @@ server.get("/api/users", function (req, res) {
   } catch (err) {
     res
       .status(500)
-      .json({ errorMessage: "The users information could not be retrieved." });
+      .json({ message: "The users information could not be retrieved." });
   }
 });
 
