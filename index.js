@@ -84,7 +84,9 @@ server.get("/api/users/:id", function (req, res) {
 //--------------DELETE request for /api/users/:id -----------------
 server.delete("/api/users/:id", (req, res) => {
   const { id } = req.params;
+
   const foundUser = users.find((user) => user.id === id);
+  console.log("req.params", id, "foundUser", foundUser);
 
   if (foundUser) {
     const userRemoved = { ...foundUser };
