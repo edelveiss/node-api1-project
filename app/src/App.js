@@ -12,14 +12,19 @@ function App() {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState(initialUser);
   const [edit, setEdit] = useState(false);
+  const [error, setError] = useState("");
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/users")
       .then((response) => {
         // console.log("get response.data", response.data);
         setUsers(response.data);
+        setError("");
       })
-      .catch((err) => console.log("error: ", err));
+      .catch((err) => {
+        setError(err.message);
+        console.log("error: ", err);
+      });
   }, []);
 
   const addNewUser = () => {
@@ -29,8 +34,12 @@ function App() {
         //console.log("get response.data", response.data);
         setUsers(response.data);
         setUser(initialUser);
+        setError("");
       })
-      .catch((err) => console.log("error: ", err));
+      .catch((err) => {
+        setError(err.message);
+        console.log("post error: ", err.message);
+      });
   };
 
   const editUser = () => {
@@ -47,8 +56,12 @@ function App() {
         setUsers(newUsers);
         setUser(initialUser);
         setEdit(false);
+        setError("");
       })
-      .catch((err) => console.log("err", err));
+      .catch((err) => {
+        setError(err.message);
+        console.log("err", err);
+      });
   };
 
   const deleteUser = (user) => {
@@ -57,6 +70,10 @@ function App() {
       .delete(`http://localhost:5000/api/users/${user.id}`)
       .then((response) => {
         setUsers(response.data);
+        setError("");
+      })
+      .catch((err) => {
+        setError(err.message);
       });
   };
   const handleChange = (e) => {
@@ -69,10 +86,12 @@ function App() {
   const handleAddNewUser = (e) => {
     e.preventDefault();
     addNewUser();
+    setError("");
   };
   const handleEditUser = (e) => {
     e.preventDefault();
     editUser();
+    setError("");
   };
 
   return (
@@ -89,6 +108,7 @@ function App() {
               edit={edit}
               setEdit={setEdit}
               setUser={setUser}
+              error={error}
             />
           ))}
         </div>
@@ -100,6 +120,7 @@ function App() {
           handleEditUser={handleEditUser}
           edit={edit}
           setEdit={setEdit}
+          error={error}
         />
       </div>
     </div>

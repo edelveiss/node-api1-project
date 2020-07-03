@@ -48,7 +48,7 @@ const UserForm = (props) => {
             value={props.user.bio}
           />
         </label>
-
+        {props.error && <div className="error">{props.error}</div>}
         <div style={{ display: "flex" }}>
           <button type="submit">Submit</button>
           <button style={{ marginLeft: "1rem" }} onClick={cancelNewPost}>

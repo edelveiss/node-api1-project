@@ -41,9 +41,9 @@ server.post("/api/users", function (req, res) {
   if (!(userInfo.name && userInfo.bio)) {
     res
       .status(400)
-      .json({ errorMessage: "Please provide name and bio for the user." });
+      .json({ message: "Please provide name and bio for the user." });
   } else if (users.find(findUserByNameBio)) {
-    res.status(400).json({ errorMessage: `${userInfo.name} already exists` });
+    res.status(400).json({ message: `${userInfo.name} already exists` });
   } else if (userInfo) {
     users = [
       ...users,
@@ -55,7 +55,7 @@ server.post("/api/users", function (req, res) {
     res.status(201).json(users); //201 when created, return the collection
   } else {
     res.status(500).json({
-      errorMessage: "There was an error while saving the user to the database",
+      message: "There was an error while saving the user to the database",
     });
   }
 });
@@ -70,14 +70,14 @@ server.get("/api/users/:id", function (req, res) {
     if (foundUser) {
       res.status(200).json(foundUser);
     } else {
-      res
-        .status(404)
-        .json({ message: "The user with the specified ID does not exist." });
+      res.status(404).json({
+        message: "The user with the specified ID does not exist.",
+      });
     }
   } catch (err) {
     res
       .status(500)
-      .json({ errorMessage: "The user information could not be retrieved." });
+      .json({ message: "The user information could not be retrieved." });
   }
 });
 
@@ -97,7 +97,7 @@ server.delete("/api/users/:id", (req, res) => {
       .status(404)
       .json({ message: "The user with the specified ID does not exist." });
   } else {
-    res.status(500).json({ errorMessage: "The user could not be removed" });
+    res.status(500).json({ message: "The user could not be removed" });
   }
 });
 //--------------PUT request for /api/users/:id -----------------
@@ -115,7 +115,7 @@ server.put("/api/users/:id", (req, res) => {
   } else if (!(name && bio)) {
     res
       .status(400)
-      .json({ errorMessage: "Please provide name and bio for the user." });
+      .json({ message: "Please provide name and bio for the user." });
   } else if (foundUser) {
     if (name) foundUser.name = name;
     if (bio) foundUser.bio = bio;
@@ -124,7 +124,7 @@ server.put("/api/users/:id", (req, res) => {
   } else {
     res
       .status(500)
-      .json({ errorMessage: "The user information could not be modified." });
+      .json({ message: "The user information could not be modified." });
   }
 });
 
