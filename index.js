@@ -23,7 +23,13 @@ server.get("/", (req, res) => {
 //--------------GET request for /api/users -----------------
 server.get("/api/users", function (req, res) {
   try {
-    res.status(200).json(users);
+    if (users) {
+      res.status(200).json(users);
+    } else {
+      res.status(404).json({
+        message: "There are no users",
+      });
+    }
   } catch (err) {
     res
       .status(500)
@@ -34,15 +40,19 @@ server.get("/api/users", function (req, res) {
 //--------------POST request for /api/users -----------------
 server.post("/api/users", function (req, res) {
   const userInfo = req.body; //read the data from the body
-  const findUserByNameBio = (user) => {
-    return user.name == userInfo.name && user.bio === userInfo.bio;
-  };
+  //   const findUserByNameBio = (user) => {
+  //     return user.name == userInfo.name && user.bio === userInfo.bio;
+  //   };
 
   if (!(userInfo.name && userInfo.bio)) {
     res
       .status(400)
       .json({ message: "Please provide name and bio for the user." });
-  } else if (users.find(findUserByNameBio)) {
+  } else if (
+    users.find(
+      (user) => user.name == userInfo.name && user.bio === userInfo.bio
+    )
+  ) {
     res.status(400).json({ message: `${userInfo.name} already exists` });
   } else if (userInfo) {
     users = [
