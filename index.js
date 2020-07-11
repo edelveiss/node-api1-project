@@ -18,9 +18,21 @@ let users = [
   },
 ];
 //--------------Test api -----------------
-server.get("/", (req, res) => {
-  res.json({ api: "api running..." });
+// server.get("/", (req, res) => {
+//   res.json({ api: "api running..." });
+// });
+//------------------------------------
+server.get("/", async (req, res) => {
+  try {
+    // const shoutouts = await db('shoutouts');
+    const messageOfTheDay = process.env.MOTD || "Hello World!"; // add this line
+    res.status(200).json({ motd: messageOfTheDay, users }); // change this line
+  } catch (error) {
+    console.error("\nERROR", error);
+    res.status(500).json({ error: "Cannot retrieve the shoutouts" });
+  }
 });
+
 //--------------GET request for /api/users -----------------
 server.get("/api/users", function (req, res) {
   try {
@@ -142,7 +154,7 @@ server.put("/api/users/:id", (req, res) => {
 });
 
 //listen for incoming requests
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 server.listen(port, () =>
   console.log(`\n == API running on port ${port} == \n`)
 );
