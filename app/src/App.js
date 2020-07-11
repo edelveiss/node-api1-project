@@ -37,8 +37,8 @@ function App() {
         setError("");
       })
       .catch((err) => {
-        setError(err.message);
-        console.log("post error: ", err.message);
+        setError(err.response.statusText);
+        console.log("post error: ", err.response.statusText);
       });
   };
 
@@ -59,7 +59,7 @@ function App() {
         setError("");
       })
       .catch((err) => {
-        setError(err.message);
+        setError(err.response.statusText);
         console.log("err", err);
       });
   };

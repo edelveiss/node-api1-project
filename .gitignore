@@ -80,6 +80,9 @@ typings/
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
+# dotenv environment variables file
+.env
+
 # Next.js build output
 .next
 

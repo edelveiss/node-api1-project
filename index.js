@@ -1,4 +1,5 @@
 //import express
+require("dotenv").config();
 const express = require("express");
 const shortid = require("shortid");
 const cors = require("cors");
@@ -45,6 +46,7 @@ server.post("/api/users", function (req, res) {
   //   };
 
   if (!(userInfo.name && userInfo.bio)) {
+    res.statusMessage = "Please provide name and bio for the user.";
     res
       .status(400)
       .json({ message: "Please provide name and bio for the user." });
@@ -123,6 +125,7 @@ server.put("/api/users/:id", (req, res) => {
       .status(404)
       .json({ message: "The user with the specified ID does not exist." });
   } else if (!(name && bio)) {
+    res.statusMessage = "Please provide name and bio for the user.";
     res
       .status(400)
       .json({ message: "Please provide name and bio for the user." });
@@ -139,7 +142,7 @@ server.put("/api/users/:id", (req, res) => {
 });
 
 //listen for incoming requests
-const port = 5000;
+const port = process.env.PORT || 3000;
 server.listen(port, () =>
   console.log(`\n == API running on port ${port} == \n`)
 );

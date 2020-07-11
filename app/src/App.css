@@ -138,6 +138,7 @@ button {
   letter-spacing: 1px;
   padding: 4px 6px;
   font-size: 1rem;
+  margin-top: 1rem;
 }
 
 button:hover {
